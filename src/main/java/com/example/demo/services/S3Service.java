@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class S3Service {
-    @Value("${bucketName}")
+    @Value("${aws.bucketName}")
     private String bucketName;
 
     private final S3Client s3Client;
