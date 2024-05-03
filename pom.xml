@@ -16,6 +16,17 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>bom</artifactId>
+        <version>2.25.18</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -23,9 +34,8 @@
 		</dependency>
 		<dependency>
     		<groupId>software.amazon.awssdk</groupId>
-    		<artifactId>aws-sdk-java</artifactId>
-    		<version>2.25.35</version>
-    		<scope>provided</scope>
+    		<artifactId>s3</artifactId>
+    		<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,14 +47,37 @@
     		<artifactId>jib-maven-plugin</artifactId>
     		<version>3.4.2</version>
 		</dependency>
+		<dependency>
+    		<groupId>software.amazon.awssdk</groupId>
+    		<artifactId>ssooidc</artifactId>
+    		<scope>compile</scope>
+		</dependency>
+		<dependency>
+    		<groupId>software.amazon.awssdk</groupId>
+    		<artifactId>sso</artifactId>
+    		<scope>compile</scope>
+		</dependency>
+		<dependency>
+        	<groupId>org.mockito</groupId>
+        	<artifactId>mockito-core</artifactId>
+        	<scope>test</scope>
+    	</dependency>
+    	<dependency>
+        	<groupId>org.junit.jupiter</groupId>
+        	<artifactId>junit-jupiter-api</artifactId>
+        	<scope>test</scope>
+    	</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+            	<groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <mainClass>com.example.demo.DemoApplication</mainClass>
+            </configuration>
+        	</plugin>
 			<plugin>
             	<groupId>com.google.cloud.tools</groupId>
             	<artifactId>jib-maven-plugin</artifactId>
@@ -62,6 +95,11 @@
                 	<to>
                     	<image>aswin/demo</image>
                 	</to>
+                	<container>
+    					<ports>
+       						<port>8080</port>
+    					</ports>
+					</container>
             	</configuration>
         	</plugin>
 		</plugins>
